@@ -1,0 +1,25 @@
+* {
+    font-family: "Geist", sans-serif;
+}
+
+
+.color-gray{
+    color: #64748B;
+}
+.color-primary{
+    background-color: #4A00FF;
+    color: white;
+}
+.text-primary{
+    color: #4A00FF;
+}
+
+.color-green{
+    background-color: #00A96E;
+}
+
+
+.orange{
+    background-color: #FEECEC;
+    color: #EF4444;
+}

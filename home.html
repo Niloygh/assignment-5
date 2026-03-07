@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Issues Tracker</title>
+
+    <!-- tailwind or daisyUI  -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- css link  -->
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar bg-base-100 shadow-sm">
+            <div class="flex-1 flex gap-2">
+                <img class="w-12" src="assets/github-logo.png" alt="">
+                <h2 class="font-bold text-2xl mt-2">GitHub Issues Tracker</h2>
+            </div>
+            <div class="flex gap-2">
+
+                <label class="input">
+                    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                            stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </g>
+                    </svg>
+                    <input type="search" required placeholder="Search" />
+                </label>
+                <button class="btn color-primary">Primary</button>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-15 ">
+        <div class="card card-body shadow">
+            <div class="">
+                <button class="btn bg-white color-gray border border-color-gray w-20 py-1">All</button>
+                <button class="btn bg-white color-gray border border-color-gray w-20 py-1">Open</button>
+                <button class="btn bg-white color-gray border border-color-gray w-20 py-1">Closed</button>
+            </div>
+        </div>
+
+
+        <section class="mt-10 card card-body shadow py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex gap-3">
+                    <div class="">
+                        <img class="mt-3" src="assets/Aperture.png" alt="">
+                    </div>
+                    <div class="">
+                        <h1 class="font-bold text-2xl"><span>0</span> Issues</h1>
+                        <p class="color-gray">Track and manage your project issues</p>
+                    </div>
+                </div>
+
+
+                <div class="flex gap-5">
+                    <div class="flex gap-2">
+                    <div class="w-4 h-4 color-green rounded-full mt-[2px]"></div>
+                    <div class="font-bold">Open</div>
+                </div>
+                <div class="flex gap-2">
+                    <div class="w-4 h-4 color-primary rounded-full mt-[2px]"></div>
+                    <div class="font-bold">Closed</div>
+                </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section>
+            <div class="">
+                <div class="">
+                    <img src="assets/Open-Status.png" alt="">
+                    <h2 class="orange">HIGH</h2>
+                </div>
+                <h1>Fix navigation menu on mobile devices</h1>
+                <p>The navigation menu doesn't collapse properly on mobile devices...</p>
+                <div class="">
+                    <div class="">
+                        <img src="assets/bug.png" alt="">
+                        <p>BUG</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
