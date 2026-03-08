@@ -2,8 +2,12 @@
 const allBtn = document.getElementById('all-btn')
 const openBtn = document.getElementById('open-btn')
 const closedBtn = document.getElementById('closed-btn')
+const cardContainer = document.getElementById('card-container')
+const count = document.getElementById('count')
+//  console.log(count.innerText)
 
 const loadingSpinner = document.getElementById('loadingSpinner')
+
 
 
 
@@ -14,7 +18,13 @@ allBtn.classList.add('color-primary')
 
 
 
-
+function showLoading(){
+    loadingSpinner.classList.remove('hidden')
+    cardContainer.innerHTML = "";
+}
+function hideLoading(){
+    loadingSpinner.classList.add('hidden')
+}
 
 
 
@@ -60,23 +70,41 @@ function switchTab(tab) {
 
 
 async function allLoadCards() {
+    showLoading()
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     const data = await res.json();
+    hideLoading()
     displayCard(data.data)
 }
 
+async function openCard() {
+    showLoading()
+    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    const data = await res.json();
+
+    if(data.data.status === 'open'){
+        
+    }
+    
+    hideLoading()
+    
+}
+
+
+
 function displayCard(cards) {
     // console.log(cards)
-
+    count.innerText = cards.length
     const cardContainer = document.getElementById('card-container');
     cardContainer.innerHTML = '';
-
+    
     cards.forEach(card => {
-        console.log(card)
-
+        console.log(card.labels)
+        
+        // count = card.length
         //     {
-        // "id": 48,
-        // "title": "Browser console shows warnings",
+            // "id": 48,
+            // "title": "Browser console shows warnings",
         // "description": "Multiple deprecation warnings appearing in browser console. Need to update deprecated code.",
         // "status": "open",
         // "labels": [
@@ -89,10 +117,13 @@ function displayCard(cards) {
         // "updatedAt": "2024-02-09T14:20:00Z"
         // }
 
+        // console.log(card.labels)
 
         const div = document.createElement("div");
-        div.classList.add('card', 'card-body', 'shadow-sm', 'border-t-5', 'border-[#00A96E]', 'space-y-3')
+        div.classList.add('shadow-sm')
         div.innerHTML = `
+        <div class="h-1 rounded-t-2xl ${card.status === 'open'? 'color-green' : 'color-primary'}"></div>
+        <div class='card card-body space-y-3'>
         <div class="flex justify-between">
                     <img src="${card.status === 'open' ? 'assets/Open-Status.png' : 'assets/Closed- Status .png'}" alt="">
                     <h2 class="orange w-20 text-center rounded-full">${card.priority.toUpperCase()}</h2>
@@ -101,20 +132,18 @@ function displayCard(cards) {
                 <p>${card.description}</p>
                 <div class="flex gap-5">
 
-                    <div class="orange border-2 border-[#FECACA] flex gap-2  px-2 py-1 rounded-full">
-                        <div class="mt-1">
-                            <img class="w-3" src="assets/bug.png" alt="">
-                        </div>
-                        <p>BUG</p>
-                    </div>
-
-                    
-                    <div class=" yellow border-2 border-[#FDE68A] flex gap-2  px-2 py-1 rounded-full">
-                        <div class="mt-1">
-                            <img class="w-4" src="assets/help-wanted.png" alt="">
-                        </div>
-                        <p>help wanted</p>
-                    </div>
+                    ${card.labels.map((item)=> 
+                        `
+                        <span class="${item === 'bug' ? 'orange' : item === 'help wanted' ? 'yellow':
+                            'color-primary'
+                            
+                        }">${item === 'bug' ? 'BUG' : 
+                            item === 'help wanted' ? 'HELP WANTED': 
+                            item
+                            
+                        }</span>
+                        `
+                    ).join("")}
                 </div>
                 
                 <hr class= "color-gray">
@@ -122,6 +151,7 @@ function displayCard(cards) {
                 <div class="color-gray">
                     <p>${card.author}</p>
                     <p>${card.createdAt}</p>
+                </div>
                 </div>
         `
 
