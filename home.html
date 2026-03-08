@@ -41,7 +41,7 @@
                     </svg>
                     <input type="search" required placeholder="Search" />
                 </label>
-                <button class="btn color-primary">Primary</button>
+                <button class="btn color-primary">Search</button>
 
             </div>
         </div>
@@ -50,11 +50,14 @@
     <main class="container mx-auto mt-15 ">
         <div class="card card-body shadow">
             <div class="">
-                <button id="all-btn" onclick="switchTab('all-btn')" class="btn bg-white color-gray border border-color-gray w-20 py-1">All</button>
+                <button id="all-btn" onclick="switchTab('all-btn')"
+                    class="btn bg-white color-gray border border-color-gray w-20 py-1">All</button>
 
-                <button id="open-btn" onclick="switchTab('open-btn')" class="btn bg-white color-gray border border-color-gray w-20 py-1">Open</button>
+                <button id="open-btn" onclick="switchTab('open-btn')"
+                    class="btn bg-white color-gray border border-color-gray w-20 py-1">Open</button>
 
-                <button id="closed-btn" onclick="switchTab('closed-btn')" class="btn bg-white color-gray border border-color-gray w-20 py-1">Closed</button>
+                <button id="closed-btn" onclick="switchTab('closed-btn')"
+                    class="btn bg-white color-gray border border-color-gray w-20 py-1">Closed</button>
             </div>
         </div>
 
@@ -74,17 +77,17 @@
 
                 <div class="flex gap-5">
                     <div class="flex gap-2">
-                    <div class="w-4 h-4 color-green rounded-full mt-[2px]"></div>
-                    <div class="font-bold">Open</div>
-                </div>
-                <div class="flex gap-2">
-                    <div class="w-4 h-4 color-primary rounded-full mt-[2px]"></div>
-                    <div class="font-bold">Closed</div>
-                </div>
+                        <div class="w-4 h-4 color-green rounded-full mt-[2px]"></div>
+                        <div class="font-bold">Open</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-4 h-4 color-primary rounded-full mt-[2px]"></div>
+                        <div class="font-bold">Closed</div>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
 
         <section id="card-container" class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
 
@@ -111,9 +114,21 @@
                         <p>help wanted</p>
                     </div>
                 </div>
-            </div>           -->
+
+                <div class="color-gray">
+                    <p>#1 by john_doe</p>
+                    <p>1/15/2024</p>
+                </div>
+                
+            </div>        -->
 
         </section>
+
+
+        <!-- loading spinner  -->
+        <div id="loadingSpinner" class="h-[60vh] flex justify-center items-center hidden">
+            <span class="loading loading-spinner loading-xl"></span>
+        </div>
 
     </main>
 
