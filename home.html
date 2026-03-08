@@ -24,7 +24,7 @@
 <body>
 
     <header>
-        <div class="navbar bg-base-100 shadow-sm">
+        <div class="navbar sm:flex-col md:flex-row bg-base-100 shadow-sm">
             <div class="flex-1 flex gap-2">
                 <img class="w-12" src="assets/github-logo.png" alt="">
                 <h2 class="font-bold text-2xl mt-2">GitHub Issues Tracker</h2>
@@ -50,9 +50,11 @@
     <main class="container mx-auto mt-15 ">
         <div class="card card-body shadow">
             <div class="">
-                <button class="btn bg-white color-gray border border-color-gray w-20 py-1">All</button>
-                <button class="btn bg-white color-gray border border-color-gray w-20 py-1">Open</button>
-                <button class="btn bg-white color-gray border border-color-gray w-20 py-1">Closed</button>
+                <button id="all-btn" onclick="switchTab('all-btn')" class="btn bg-white color-gray border border-color-gray w-20 py-1">All</button>
+
+                <button id="open-btn" onclick="switchTab('open-btn')" class="btn bg-white color-gray border border-color-gray w-20 py-1">Open</button>
+
+                <button id="closed-btn" onclick="switchTab('closed-btn')" class="btn bg-white color-gray border border-color-gray w-20 py-1">Closed</button>
             </div>
         </div>
 
@@ -84,27 +86,39 @@
         </section>
         
 
-        <section>
-            <div class="">
-                <div class="">
+        <section id="card-container" class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+
+            <!-- <div class="card card-body shadow-sm border-t-5 border-[#00A96E] space-y-3">
+                <div class="flex justify-between">
                     <img src="assets/Open-Status.png" alt="">
-                    <h2 class="orange">HIGH</h2>
+                    <h2 class="orange w-20 text-center rounded-full">HIGH</h2>
                 </div>
                 <h1>Fix navigation menu on mobile devices</h1>
                 <p>The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="">
-                    <div class="">
-                        <img src="assets/bug.png" alt="">
+                <div class="flex gap-5">
+                    <div class="orange border-2 border-[#FECACA] flex gap-2  px-2 py-1 rounded-full">
+                        <div class="mt-1">
+                            <img class="w-3" src="assets/bug.png" alt="">
+                        </div>
                         <p>BUG</p>
                     </div>
+
+                    
+                    <div class=" yellow border-2 border-[#FDE68A] flex gap-2  px-2 py-1 rounded-full">
+                        <div class="mt-1">
+                            <img class="w-4" src="assets/help-wanted.png" alt="">
+                        </div>
+                        <p>help wanted</p>
+                    </div>
                 </div>
-            </div>
+            </div>           -->
+
         </section>
 
     </main>
 
 
-    <script src="script.js"></script>
+    <script src="script/home.js"></script>
 </body>
 
 </html>
