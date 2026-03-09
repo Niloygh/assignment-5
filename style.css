@@ -29,3 +29,26 @@
     background-color: #FFF8DB;
 }
 
+.bug-color{
+    border-radius: 50px;
+    padding: 0px 6px;
+    color: #EF4444;
+    background-color: #FEECEC;
+    border: 2px solid #FECACA;
+}
+.help-color{
+    border-radius: 50px;
+    padding: 0px 6px;
+    color: #D97706;
+    background-color: #FFF8DB;
+    border: 2px solid #FDE68A;
+}
+.enhancement-color{
+    border-radius: 50px;
+    padding: 0px 6px;
+    color: #00A96E;
+    background-color: #DEFCE8;
+    border: 2px solid #BBF7D0;
+}
+
+

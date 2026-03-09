@@ -10,6 +10,9 @@ const count = document.getElementById('count')
 
 const loadingSpinner = document.getElementById('loadingSpinner')
 
+const cardModal = document.getElementById('card-modal')
+
+
 allBtn.addEventListener('click', () => {
     cardFilters('all')
     currentStatus = 'all'
@@ -28,7 +31,7 @@ closedBtn.addEventListener('click', () => {
 
 
 
-,closedBtn.classList.remove('bg-white', 'color-gray')
+closedBtn.classList.remove('bg-white', 'color-gray')
 allBtn.classList.add('color-primary')
 // console.log(allBtn, openBtn, closedBtn)
 
@@ -188,16 +191,21 @@ function displayCard(cards) {
                     <img src="${card.status === 'open' ? 'assets/Open-Status.png' : 'assets/Closed- Status .png'}" alt="">
                     <h2 class="orange w-20 text-center rounded-full">${card.priority.toUpperCase()}</h2>
                 </div>
-                <h1>${card.title}</h1>
+                <h1 onclick="openCardModal(${card.id})" >${card.title}</h1>
                 <p>${card.description}</p>
-                <div class="flex gap-5">
+                <div class="flex gap-5 flex-wrap">
 
                     ${card.labels.map((item) =>
             `
-                        <span class="${item === 'bug' ? 'orange' : item === 'help wanted' ? 'yellow' :
-                'color-primary'
+                        <span class="flex gap-2 ${item === 'bug' ? 'bug-color' : item === 'help wanted' ? 'help-color' :  'enhancement-color'
 
-            }">${item === 'bug' ? 'BUG' :
+            }">
+            ${item === 'bug' ? '<img class="w-3 h-3 mt-1" src="assets/bug.png" alt="">' : 
+            item === 'help wanted' ? '<img class="w-3 h-3 mt-1" src="assets/help-wanted.png" alt="">' :
+            '<img class="w-3 h-3 mt-1" src="assets/enhancement.png" alt="">'
+            }
+            
+            ${item === 'bug' ?  'BUG' :
                 item === 'help wanted' ? 'HELP WANTED' :
                     item
 
@@ -215,6 +223,10 @@ function displayCard(cards) {
                 </div>
         `
 
+        div.addEventListener('click', function() {
+            openCardModal(card.id)
+        })
+
         cardContainer.append(div)
         cardFilters(currentStatus)
         updateTotalCard()
@@ -224,6 +236,76 @@ function displayCard(cards) {
 
     });
 }
+
+
+async function openCardModal(issueId) {
+    try {
+        cardModal.innerHTML = `<div class="modal-box flex justify-center items-center"><span class="loading loading-spinner loading-xl"></span></div>`;
+        cardModal.showModal();
+
+        const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${issueId}`);
+        const card = await res.json();
+        const data = card.data;
+
+        const badgesHTML = data.labels.map(label => {
+            let colorClass, imgSrc, text;
+            if(label === 'bug') {
+                colorClass = 'orange border-2 border-[#FECACA] flex gap-2 px-2 py-1 rounded-full';
+                imgSrc = 'assets/bug.png';
+                text = 'BUG';
+            } else if(label === 'help wanted') {
+                colorClass = 'yellow border-2 border-[#FDE68A] flex gap-2 px-2 py-1 rounded-full';
+                imgSrc = 'assets/help-wanted.png';
+                text = 'HELP WANTED';
+            } else {
+                colorClass = 'green border-2 border-[#D1FAE5] flex gap-2 px-2 py-1 rounded-full';
+                imgSrc = 'assets/enhancement.png';
+                text = label.toUpperCase();
+            }
+            return `<div class="${colorClass}"><img class="w-3 h-3 mt-1" src="${imgSrc}" alt="">${text}</div>`;
+        }).join('');
+
+        cardModal.innerHTML = `
+        <div class="modal-box space-y-2">
+            <span class="flex justify-end cursor-pointer" onclick="cardModal.close()">X</span>
+            <h1 class="font-bold text-2xl">${data.title}</h1>
+            <div class="flex gap-2 justify-between">
+                <p class="h-6 px-2 rounded-full ${data.status === 'open' ? 'bg-[#00A96E] text-white' : 'bg-[#3B82F6] text-white'}">
+                    ${data.status === 'open' ? 'Opened' : 'Closed'}
+                </p>
+                <ul>
+                    <li>Opened by ${data.author}</li>
+                    <li>${new Date(data.createdAt).toLocaleDateString()}</li>
+                </ul>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+                ${badgesHTML}
+            </div>
+            <p>${data.description}</p>
+            <div class="flex gap-5 mt-3">
+                <div>
+                    <p>Assignee:</p>
+                    <h2>${data.assignee || 'Not assigned'}</h2>
+                </div>
+                <div>
+                    <p>Priority:</p>
+                    <h2>${data.priority.toUpperCase()}</h2>
+                </div>
+            </div>
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn">Close</button>
+                </form>
+            </div>
+        </div>
+        `;
+    } catch (error) {
+        console.error("Error fetching issue data:", error);
+        alert("Failed to load issue details.");
+        cardModal.close();
+    }
+}
+
 
 // function bugDisplay() {
 //     const badgeDiv = document.createElement('div')
