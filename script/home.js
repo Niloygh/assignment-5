@@ -6,6 +6,9 @@ const openBtn = document.getElementById('open-btn')
 const closedBtn = document.getElementById('closed-btn')
 const cardContainer = document.getElementById('card-container')
 const count = document.getElementById('count')
+
+const searchBtn = document.getElementById('search-btn')
+const searchInput = document.getElementById('search-input')
 //  console.log(count.innerText)
 
 const loadingSpinner = document.getElementById('loadingSpinner')
@@ -307,16 +310,58 @@ async function openCardModal(issueId) {
 }
 
 
-// function bugDisplay() {
-//     const badgeDiv = document.createElement('div')
-//     badgeDiv.classList.add('orange', 'border-2', 'border-[#FECACA]', 'flex', 'gap-2', 'px-2', 'py-1', 'rounded-full')
-//     badgeDiv.innerHTML = `
-//         <div class="mt-1">
-//             <img class="w-3" src="assets/bug.png" alt="">
-//         </div>
-//         <p>BUG</p>
-//     `
-//     cardContainer.append(badgeDiv)
-// }
+
+function showLoader() {
+    loadingSpinner.classList.remove('hidden');
+    cardContainer.innerHTML = '';
+}
+function hideLoader() {
+    loadingSpinner.classList.add('hidden');
+}
+
+
+
+const fetchIssuesBySearch = async (title) => {
+    try {
+        showLoader();
+        const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${title}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch search results!");
+
+        const data = await res.json();
+        if (!data.data || data.data.length === 0) {
+            cardContainer.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">No results found</p>`;
+        } else {
+            displayCard(data.data); // Use your existing displayCard function
+        }
+    } catch (error) {
+        console.error("Search Error:", error);
+        cardContainer.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">No results found</p>`;
+    }
+    hideLoader();
+};
+
+
+searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        searchBtn.click();
+    }
+});
+
+// Search button click
+searchBtn.addEventListener("click", () => {
+    const query = searchInput.value.trim();
+    currentStatus = 'all';
+    switchTab('all-btn'); // Reset filter UI
+
+    if (!query) {
+        alert("Please enter search text");
+        allLoadCards(); // Fetch all issues if search is empty
+        return;
+    }
+
+    fetchIssuesBySearch(query);
+});
+
 
 allLoadCards()
